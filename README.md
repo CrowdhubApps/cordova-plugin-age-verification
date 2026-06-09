@@ -131,6 +131,19 @@ Use age data only for age-appropriate compliance — not for advertising,
 marketing, profiling, or analytics. This is a contractual requirement of both
 platform APIs.
 
+## Releasing
+
+Publishing to npm is automated via GitHub Actions and triggered by **publishing a
+GitHub Release**:
+
+1. Bump `version` in `package.json` and `plugin.xml`, then commit to `main`.
+2. Create a GitHub Release whose tag matches that version (e.g. `v1.2.0`).
+3. The [publish workflow](.github/workflows/publish.yml) validates the package,
+   verifies the tag matches `package.json`, and runs
+   `npm publish --access public --provenance`.
+
+Requires an `NPM_TOKEN` repo secret with publish rights to the `@crowdhub` scope.
+
 ## License
 
 [MIT](LICENSE) © CrowdHub
