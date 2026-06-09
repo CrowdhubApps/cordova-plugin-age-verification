@@ -49,8 +49,8 @@ export interface IosAgeRange {
     lowerBound: number | null;
     upperBound: number | null;
     declaration: AgeDeclaration | null;
-    /** Names of parental controls currently active on the device. */
-    activeParentalControls: string[];
+    /** Raw value of the active-parental-controls OptionSet, as a string. */
+    activeParentalControls: string;
 }
 
 /** Unified result returned by {@link AgeVerificationPlugin.requestAgeRange}. */

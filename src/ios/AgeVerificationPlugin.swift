@@ -97,7 +97,7 @@ class AgeVerificationPlugin: CDVPlugin {
                     "lowerBound": NSNull(),
                     "upperBound": NSNull(),
                     "declaration": NSNull(),
-                    "activeParentalControls": [String]()
+                    "activeParentalControls": "0"
                 ] as [String: Any]
             ]
 
@@ -105,7 +105,9 @@ class AgeVerificationPlugin: CDVPlugin {
             let lower: Any = range.lowerBound.map { $0 as Any } ?? NSNull()
             let upper: Any = range.upperBound.map { $0 as Any } ?? NSNull()
             let declaration: Any = self.declarationString(range.ageRangeDeclaration).map { $0 as Any } ?? NSNull()
-            let controls = self.parentalControlNames(range.activeParentalControls)
+            // ParentalControls is an OptionSet; serialize its rawValue rather
+            // than guessing member names (which are not yet publicly stable).
+            let controls = "\(range.activeParentalControls.rawValue)"
 
             return [
                 "platform": "ios",
@@ -150,12 +152,6 @@ class AgeVerificationPlugin: CDVPlugin {
         }
     }
 
-    @available(iOS 26.0, *)
-    private func parentalControlNames(_ controls: AgeRangeService.ParentalControls) -> [String] {
-        var names: [String] = []
-        if controls.contains(.ageRange) { names.append("ageRange") }
-        return names
-    }
 
     @available(iOS 26.0, *)
     private func describe(_ error: AgeRangeService.Error) -> String {

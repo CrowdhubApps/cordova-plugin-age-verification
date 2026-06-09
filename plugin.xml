@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="@crowdhub/cordova-plugin-age-verification"
-        version="0.0.4">
+        version="0.0.5">
 
     <name>AgeVerification</name>
     <description>
