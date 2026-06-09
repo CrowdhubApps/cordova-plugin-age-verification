@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="@crowdhub/cordova-plugin-age-verification"
-        version="0.0.3">
+        version="0.0.4">
 
     <name>AgeVerification</name>
     <description>
@@ -34,10 +34,13 @@
             </feature>
         </config-file>
 
-        <!-- Kotlin + AndroidX are required by the Age Signals client library -->
-        <preference name="AndroidXEnabled" value="true" />
-        <preference name="GradlePluginKotlinEnabled" value="true" />
-        <preference name="GradlePluginKotlinCodeStyle" value="official" />
+        <!--
+          The Age Signals client library requires Kotlin + AndroidX. These are
+          app-level build settings the host app must enable in its config.xml:
+            <preference name="AndroidXEnabled" value="true" />
+            <preference name="GradlePluginKotlinEnabled" value="true" />
+          (A plugin cannot set them without forcing required install variables.)
+        -->
 
         <!-- Google Play Age Signals client library (minSdk 23). -->
         <framework src="com.google.android.play:age-signals:0.0.3" />

@@ -22,8 +22,13 @@ The package is published to the CrowdHub npm scope (`@crowdhub`).
 ## Requirements
 
 ### Android
-- `minSdkVersion` **23** or higher (set it in your app's `config.xml`).
-- AndroidX and Kotlin are enabled automatically by the plugin.
+- `minSdkVersion` **23** or higher, plus AndroidX and Kotlin enabled — set all
+  three in your app's `config.xml`:
+  ```xml
+  <preference name="android-minSdkVersion" value="23" />
+  <preference name="AndroidXEnabled" value="true" />
+  <preference name="GradlePluginKotlinEnabled" value="true" />
+  ```
 - The Age Signals API only returns data on installs **updated by Google Play**,
   and only for users in regions where age data is legally required. Enroll your
   app in the **Play Console** and configure your age bands there.
