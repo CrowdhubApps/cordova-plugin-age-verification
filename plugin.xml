@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="@crowdhub/cordova-plugin-age-verification"
+        version="1.0.0">
+
+    <name>AgeVerification</name>
+    <description>
+        Privacy-preserving age assurance for Cordova apps. Wraps the Google Play
+        Age Signals API (Android/Kotlin) and Apple's Declared Age Range API
+        (iOS/Swift) behind a single Promise-based JavaScript API with TypeScript
+        definitions.
+    </description>
+    <license>MIT</license>
+    <author>CrowdHub &lt;dev@crowdhub.dev&gt;</author>
+    <keywords>cordova,age-verification,age-assurance,age-signals,declared-age-range,compliance</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=10.0.0" />
+        <engine name="cordova-android" version=">=10.0.0" />
+        <engine name="cordova-ios" version=">=6.0.0" />
+    </engines>
+
+    <!-- JavaScript interface -->
+    <js-module src="www/AgeVerification.js" name="AgeVerification">
+        <clobbers target="cordova.plugins.ageVerification" />
+    </js-module>
+
+    <!-- ===================== Android ===================== -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AgeVerification">
+                <param name="android-package" value="com.crowdhub.ageverification.AgeVerificationPlugin" />
+            </feature>
+        </config-file>
+
+        <!-- Kotlin + AndroidX are required by the Age Signals client library -->
+        <preference name="AndroidXEnabled" value="true" />
+        <preference name="GradlePluginKotlinEnabled" value="true" />
+        <preference name="GradlePluginKotlinCodeStyle" value="official" />
+
+        <!-- Google Play Age Signals client library (minSdk 23). -->
+        <framework src="com.google.android.play:age-signals:0.0.3" />
+
+        <source-file src="src/android/AgeVerificationPlugin.kt"
+                     target-dir="app/src/main/kotlin/com/crowdhub/ageverification" />
+    </platform>
+
+    <!-- ======================= iOS ======================= -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="AgeVerification">
+                <param name="ios-package" value="AgeVerificationPlugin" />
+            </feature>
+        </config-file>
+
+        <!-- The Declared Age Range API requires iOS 26.0 and the matching capability/entitlement. -->
+        <preference name="deployment-target" value="26.0" />
+
+        <config-file target="*Entitlements-Debug.plist" parent="com.apple.developer.declared-age-range">
+            <true/>
+        </config-file>
+        <config-file target="*Entitlements-Release.plist" parent="com.apple.developer.declared-age-range">
+            <true/>
+        </config-file>
+
+        <source-file src="src/ios/AgeVerificationPlugin.swift" />
+
+        <!-- Sets up the Swift version and bridging header so the Swift CDVPlugin compiles. -->
+        <dependency id="cordova-plugin-add-swift-support" version="2.0.2" />
+    </platform>
+</plugin>

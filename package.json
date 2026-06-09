@@ -1,0 +1,54 @@
+{
+  "name": "@crowdhub/cordova-plugin-age-verification",
+  "version": "1.0.0",
+  "description": "Cordova plugin for privacy-preserving age assurance using the Google Play Age Signals API (Android/Kotlin) and the Apple Declared Age Range API (iOS/Swift). Exposes a unified, Promise-based JavaScript API with TypeScript definitions.",
+  "cordova": {
+    "id": "@crowdhub/cordova-plugin-age-verification",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "main": "www/AgeVerification.js",
+  "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CrowdhubApps/cordova-plugin-age-verification.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "age-verification",
+    "age-assurance",
+    "age-signals",
+    "declared-age-range",
+    "age-gate",
+    "compliance",
+    "kids",
+    "parental-controls"
+  ],
+  "author": "CrowdHub <dev@crowdhub.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CrowdhubApps/cordova-plugin-age-verification/issues"
+  },
+  "homepage": "https://github.com/CrowdhubApps/cordova-plugin-age-verification#readme",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=10.0.0"
+    }
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "www/",
+    "types/",
+    "src/",
+    "plugin.xml",
+    "README.md",
+    "LICENSE"
+  ]
+}
