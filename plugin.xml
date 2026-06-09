@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="@crowdhub/cordova-plugin-age-verification"
-        version="0.0.2">
+        version="0.0.3">
 
     <name>AgeVerification</name>
     <description>
@@ -54,8 +54,13 @@
             </feature>
         </config-file>
 
-        <!-- The Declared Age Range API requires iOS 26.0 and the matching capability/entitlement. -->
-        <preference name="deployment-target" value="26.0" />
+        <!--
+          The Declared Age Range API is iOS 26.0+. The framework is WEAK-linked
+          so the host app keeps loading on older iOS (the plugin reports
+          notAvailable at runtime via the @available guard in Swift). This
+          deliberately does NOT raise the host app's deployment target.
+        -->
+        <framework src="DeclaredAgeRange.framework" weak="true" />
 
         <config-file target="*Entitlements-Debug.plist" parent="com.apple.developer.declared-age-range">
             <true/>
