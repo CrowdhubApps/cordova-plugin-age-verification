@@ -1,0 +1,57 @@
+name: Publish to npm
+
+on:
+  push:
+    branches: [main]
+
+# Allow only one publish run at a time.
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Validate package
+        run: |
+          node --check www/AgeVerification.js
+          npx -y -p typescript tsc --noEmit --strict types/index.d.ts
+
+      - name: Check whether this version is already published
+        id: check
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "already_published=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::$NAME@$VERSION is already on npm — skipping publish. Bump the version to release."
+          else
+            echo "already_published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish
+        if: steps.check.outputs.already_published == 'false'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Summary
+        run: |
+          if [ "${{ steps.check.outputs.already_published }}" = "true" ]; then
+            echo "Skipped: version ${{ steps.check.outputs.version }} already published." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Published version ${{ steps.check.outputs.version }} to npm." >> "$GITHUB_STEP_SUMMARY"
+          fi
