@@ -1,9 +1,9 @@
 {
-  "name": "@crabhouse/cordova-plugin-age-verification",
-  "version": "1.0.0",
+  "name": "@crowdhub/cordova-plugin-age-verification",
+  "version": "0.0.1",
   "description": "Cordova plugin for privacy-preserving age assurance using the Google Play Age Signals API (Android/Kotlin) and the Apple Declared Age Range API (iOS/Swift). Exposes a unified, Promise-based JavaScript API with TypeScript definitions.",
   "cordova": {
-    "id": "@crabhouse/cordova-plugin-age-verification",
+    "id": "@crowdhub/cordova-plugin-age-verification",
     "platforms": [
       "android",
       "ios"
